@@ -1,14 +1,12 @@
 # PrivacyShield
 
-## Components
-- ESP32-53 Microcontroller
-- I2S MEMS Microphone (INMP441)
-- Jumper Wires
-- Breadboard
-- Surface trasducer
-- Class D Audio Amplifier (PAM8403)
-- 18650 Li-ion Battery Shield V3
-- TO4056 Charging Module*
-- Double-sided tape for Breadboard
-- Box
-
+## Hardware list:
+- ESP32-S3 Microcontroller (x2)
+- Breadboard (x2)
+- Connectors
+- Battery (x4)
+- 18650 Battery Shield V3: https://amzn.eu/d/0iAi3bPU
+- I2S microphone (x2)
+- Dayton Audio DAEX25: https://amzn.eu/d/07JOvqCm
+- MAX98357A (x2): https://amzn.eu/d/0508CoDR
+- 22 AWG Speaker Wire: https://amzn.eu/d/0dPKMZ0M
