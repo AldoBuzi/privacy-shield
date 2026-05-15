@@ -3,6 +3,7 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 #include "mesh_core.h"
+#include "esp_mac.h"
 
 static const char *TAG = "discovery";
 

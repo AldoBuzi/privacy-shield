@@ -4,6 +4,7 @@
 #include "esp_log.h"
 #include "global_config.h"
 #include "mesh_core.h"
+#include "esp_mac.h"
 
 static const char *TAG = "main";
 

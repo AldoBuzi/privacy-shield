@@ -105,7 +105,7 @@ esp_err_t mesh_init(uint8_t node_id) {
     ESP_ERROR_CHECK(esp_now_init());
 
     /* 3. Register callbacks */
-    ESP_ERROR_CHECK(esp_now_register_send_cb_v2(espnow_send_cb));
+    ESP_ERROR_CHECK(esp_now_register_send_cb(espnow_send_cb));
     ESP_ERROR_CHECK(esp_now_register_recv_cb(espnow_recv_cb));
 
     /* 4. Add broadcast peer (so we can send broadcast packets) */
