@@ -134,7 +134,7 @@ esp_err_t mesh_send(const uint8_t *mac, const void *data, size_t len);
 esp_err_t mesh_broadcast(const void *data, size_t len);
 
 /**
- * @brief Broadcast a HELLO packet (call periodically, e.g. every 5s).
+ * @brief Broadcast a HELLO packet (call periodically, e.g. every 10s).
  */
 esp_err_t mesh_send_hello(void);
 

@@ -60,7 +60,7 @@ static void espnow_recv_cb(const esp_now_recv_info_t *recv_info,
 
 static esp_err_t wifi_init(void) {
     /* NVS flash must be initialized for WiFi to store calibration data */
-    esp_err_t ret = nvs_flash_init();
+    esp_err_t ret = nvs_flash_init(); //Non-Volatible Storage
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES ||
         ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         ESP_ERROR_CHECK(nvs_flash_erase());
@@ -68,18 +68,17 @@ static esp_err_t wifi_init(void) {
     }
     ESP_ERROR_CHECK(ret);
 
-    /* --- NEW CODE --- */
     /* Initialize the underlying TCP/IP stack and default event loop */
-    ESP_ERROR_CHECK(esp_netif_init());
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
+    ESP_ERROR_CHECK(esp_netif_init()); //underlying networking stack (LwIP)
+    ESP_ERROR_CHECK(esp_event_loop_create_default()); //system for passing messages
     /* ---------------- */
 
     /* Minimal WiFi init — we just need the radio, not an actual network */
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
     ESP_ERROR_CHECK(esp_wifi_init(&cfg));
     ESP_ERROR_CHECK(esp_wifi_set_storage(WIFI_STORAGE_RAM));
-    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
-    ESP_ERROR_CHECK(esp_wifi_start());
+    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA)); //Station mode
+    ESP_ERROR_CHECK(esp_wifi_start()); //powers up the antenna
 
     /* Set a long-term PM policy — ESP-NOW needs the radio on.
      * WIFI_PS_MIN_MODEM keeps the modem awake. */

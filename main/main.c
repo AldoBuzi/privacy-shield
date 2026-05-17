@@ -5,6 +5,7 @@
 #include "global_config.h"
 #include "mesh_core.h"
 #include "esp_mac.h"
+#include "audio_hal.h"
 
 static const char *TAG = "main";
 
@@ -16,7 +17,7 @@ static void hello_task(void *arg) {
     TickType_t last_wake = xTaskGetTickCount();
     while (1) {
         mesh_send_hello();
-        vTaskDelayUntil(&last_wake, pdMS_TO_TICKS(5000));
+        vTaskDelayUntil(&last_wake, pdMS_TO_TICKS(10000));
     }
 }
 
@@ -80,19 +81,18 @@ static void on_mesh_packet(const uint8_t *src_mac, const void *data, size_t len)
 
 void app_main(void) {
     ESP_LOGI(TAG, "======================================");
-    ESP_LOGI(TAG, "  Privacy Shield — Masking Node");
-    ESP_LOGI(TAG, "  Node ID: %u", DEFAULT_NODE_ID);
+    ESP_LOGI(TAG, "  Privacy Shield — Node %u", DEFAULT_NODE_ID);
     ESP_LOGI(TAG, "======================================");
 
-    /* 1. Initialize the mesh */
+    /* ---- Mesh (ESP-NOW) ---- */
     ESP_ERROR_CHECK(mesh_init(DEFAULT_NODE_ID));
-
-    /* 2. Register our packet handler */
     mesh_register_recv_callback(on_mesh_packet);
-
-    /* 3. Start background tasks */
     xTaskCreate(hello_task, "hello", 2048, NULL, 1, NULL);
     xTaskCreate(prune_task, "prune", 2048, NULL, 1, NULL);
 
-    ESP_LOGI(TAG, "Mesh node ready — listening for ESP-NOW packets");
+    /* ---- Audio (I2S Microphone) ---- */
+    audio_hal_mic_init();
+    xTaskCreatePinnedToCore(audio_hal_mic_read_task, "Mic_Task", 4096, NULL, 5, NULL, 1);
+
+    ESP_LOGI(TAG, "System ready.");
 }
