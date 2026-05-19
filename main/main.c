@@ -88,7 +88,7 @@ void app_main(void) {
     ESP_ERROR_CHECK(mesh_init(DEFAULT_NODE_ID));
     mesh_register_recv_callback(on_mesh_packet);
     xTaskCreate(hello_task, "hello", 2048, NULL, 1, NULL);
-    xTaskCreate(prune_task, "prune", 2048, NULL, 1, NULL);
+    xTaskCreate(prune_task, "prune", 4096, NULL, 1, NULL);
 
     /* ---- Audio (I2S Microphone) ---- */
     audio_hal_mic_init();
